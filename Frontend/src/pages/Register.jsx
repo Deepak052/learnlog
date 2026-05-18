@@ -20,7 +20,7 @@ const Register = () => {
         }
     };
 
-   
+
     if (isRegistered) {
         return (
             <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
@@ -32,7 +32,7 @@ const Register = () => {
                     <p className="text-gray-500 mb-1">Aapka account successfully ban gaya hai:</p>
                     <p className="text-indigo-600 font-medium mb-6">{sentTo}</p>
                     <p className="text-gray-400 text-sm mb-6">
-                        Aap ab directly login kar sakte hain. Email verification ki zaroorat nahi hai.
+                        Aap ab directly login kar sakte hain.
                     </p>
                     <Link
                         to="/login"
