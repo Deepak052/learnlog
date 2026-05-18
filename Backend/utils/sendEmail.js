@@ -1,0 +1,35 @@
+const nodemailer = require('nodemailer');
+
+const sendEmail = async ({ to, subject, html }) => {
+    console.log(`[sendEmail] Preparing to send email to ${to}...`);
+    console.log(`[sendEmail] Checking credentials - User exists: ${!!process.env.EMAIL_USER}, Pass exists: ${!!process.env.EMAIL_PASS}`);
+
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS
+        },
+        connectionTimeout: 10000, // 10 seconds timeout
+        greetingTimeout: 5000,
+        socketTimeout: 10000
+    });
+
+    console.log(`[sendEmail] Transporter created, attempting to send...`);
+
+    try {
+        const info = await transporter.sendMail({
+            from: `"LearnLog" <${process.env.EMAIL_USER}>`,
+            to,
+            subject,
+            html
+        });
+        console.log(`[sendEmail] Message sent successfully. MessageId: ${info.messageId}`);
+        return info;
+    } catch (error) {
+        console.error(`[sendEmail] CRITICAL ERROR inside sendEmail function:`, error);
+        throw error;
+    }
+};
+
+module.exports = sendEmail;

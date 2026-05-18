@@ -1,0 +1,58 @@
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory
+coverage/
+
+# Build folders
+dist/
+build/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE folders/files
+.vscode/
+.idea/
+
+# Temporary files
+tmp/
+temp/
+
+# Uploads
+uploads/
+
+# Cache
+.cache/
+
+# Render / Vercel
+.vercel/
+.render/
+
+# Optional npm cache
+.npm
+
+# Mac files
+.AppleDouble
+.LSOverride
