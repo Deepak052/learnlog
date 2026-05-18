@@ -36,58 +36,21 @@ const registerUser = async (req, res) => {
 
         console.log('✅ Password hashed successfully');
 
-        // Generate verification token
-        const verificationToken = crypto.randomBytes(32).toString('hex');
-
-        console.log('🪪 Verification token generated');
-
-        // Create user
+        // Create user directly as verified
         const user = await User.create({
             name,
             email,
             password: hashedPassword,
-            verificationToken
+            isVerified: true
         });
 
-        console.log('✅ User created successfully');
+        console.log('✅ User created successfully (Email Bypassed)');
         console.log('User ID:', user._id);
 
-        // Verification URL
-        const verifyUrl = `${req.protocol}://${req.get('host')}/api/auth/verify-email/${verificationToken}`;
-
-        console.log('🔗 Verification URL generated:', verifyUrl);
-
-        // Send email
-        console.log('📧 Sending verification email...');
-
-        try {
-            await sendEmail({
-                to: user.email,
-                subject: 'LearnLog — Verify Your Email',
-                html: `
-                    <div style="font-family: Arial, sans-serif; max-width: 500px; margin: auto; padding: 30px; border: 1px solid #e0e0e0; border-radius: 10px;">
-                        <h2 style="color: #4f46e5;">Welcome to LearnLog! 🎉</h2>
-                        <p>Hi <strong>${user.name}</strong>,</p>
-                        <p>Apna email verify karne ke liye neeche click karo:</p>
-                        <a href="${verifyUrl}"
-                           style="display: inline-block; margin: 20px 0; padding: 12px 28px; background-color: #4f46e5; color: white; border-radius: 8px; text-decoration: none; font-weight: bold;">
-                            Verify Email
-                        </a>
-                        <p style="color: #888; font-size: 13px;">Agar aapne account nahi banaya toh ignore karo.</p>
-                    </div>
-                `
-            });
-
-            console.log('✅ Verification email sent successfully to:', user.email);
-
-            res.status(201).json({
-                message: 'Registration successful! Email check karo.'
-            });
-        } catch (emailError) {
-            console.error('❌ Failed to send verification email:', emailError);
-            await User.findByIdAndDelete(user._id);
-            return res.status(500).json({ message: 'Email could not be sent. Please try registering again.' });
-        }
+        res.status(201).json({
+            message: 'Registration successful! You can now log in.',
+            token: generateToken(user._id)
+        });
 
     } catch (error) {
         console.log('❌ Error in registerUser controller');
