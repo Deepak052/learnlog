@@ -7,32 +7,32 @@ import { FiMail } from 'react-icons/fi';
 
 const Register = () => {
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm();
-    const [emailSent, setEmailSent] = useState(false);
+    const [isRegistered, setIsRegistered] = useState(false);
     const [sentTo, setSentTo] = useState('');
 
     const onSubmit = async (data) => {
         try {
             await API.post('/auth/register', data);
             setSentTo(data.email);
-            setEmailSent(true);
+            setIsRegistered(true);
         } catch (error) {
             toast.error(error.response?.data?.message || 'Registration failed');
         }
     };
 
    
-    if (emailSent) {
+    if (isRegistered) {
         return (
             <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
                 <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-8 text-center">
                     <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <FiMail size={32} className="text-indigo-600" />
+                        <span className="text-3xl">🎉</span>
                     </div>
-                    <h2 className="text-2xl font-bold text-gray-800 mb-2">Email Bheja Gaya!</h2>
-                    <p className="text-gray-500 mb-1">Verification link bheja gaya hai:</p>
+                    <h2 className="text-2xl font-bold text-gray-800 mb-2">Account Created!</h2>
+                    <p className="text-gray-500 mb-1">Aapka account successfully ban gaya hai:</p>
                     <p className="text-indigo-600 font-medium mb-6">{sentTo}</p>
                     <p className="text-gray-400 text-sm mb-6">
-                        Inbox check karo aur "Verify Email" button pe click karo. Phir login karo.
+                        Aap ab directly login kar sakte hain. Email verification ki zaroorat nahi hai.
                     </p>
                     <Link
                         to="/login"
