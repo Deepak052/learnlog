@@ -5,7 +5,6 @@ const sendEmail = async ({ to, subject, html }) => {
     console.log(`[sendEmail] Checking credentials - User exists: ${!!process.env.EMAIL_USER}, Pass exists: ${!!process.env.EMAIL_PASS}`);
 
     const transporter = nodemailer.createTransport({
-        service: 'gmail',
         host: 'smtp.gmail.com',
         port: 465,
         secure: true,
